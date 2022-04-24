@@ -84,3 +84,9 @@ function deleteEmployee() {
 function close() {
     connection.end();
 };
+function addRole() 
+function viewDepartments()
+function addDepartment() 
+function addEmployee()
+function viewRoles()
+function viewEmployees()
