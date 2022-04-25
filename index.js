@@ -73,21 +73,53 @@ function viewEmployees() {
     })
 }
 function updateRole() {
+    
 
 };
 
 
-function deleteEmployee() {
+const removeEmployee = () => {
+    let sql =     `SELECT employee.id, employee.first_name, employee.last_name FROM employee`;
 
-};
+    connection.promise().query(sql, (res) => {
+      let employeeNamesArray = [];
+      response.forEach((employee) => {employeeNamesArray.push(`${employee.first_name} ${employee.last_name}`);});
+
+      inquirer
+        .prompt([
+          {
+            name: 'chosenEmployee',
+            type: 'list',
+            message: 'Which employee would you like to delete?',
+            choices: employeeNamesArray
+          }
+        ])
+        .then((answer) => {
+          let employeeId;
+
+          response.forEach((employee) => {
+            if (
+              answer.chosenEmployee ===
+              `${employee.first_name} ${employee.last_name}`
+            ) {
+              employeeId = employee.id;
+            }
+          });
+
+          var query = `DELETE FROM employee WHERE employee.id = ?`;
+          connection.query(sql, [employeeId],
+          );
+        });
+    });
+  };
 
 
 function close() {
     connection.end();
 };
 function addRole() {
-    connection.query('SELECT * FROM department', function(err, res) {
-        if (err) throw err;
+    connection.query('SELECT * FROM department', function(res) {
+
     
         inquirer 
         .prompt([
