@@ -81,7 +81,7 @@ function updateRole() {
 const removeEmployee = () => {
     let sql =     `SELECT employee.id, employee.first_name, employee.last_name FROM employee`;
 
-    connection.promise().query(sql, (res) => {
+    connection.promise().query(sql, (req,res) => {
       let employeeNamesArray = [];
       response.forEach((employee) => {employeeNamesArray.push(`${employee.first_name} ${employee.last_name}`);});
 
@@ -118,7 +118,7 @@ function close() {
     connection.end();
 };
 function addRole() {
-    connection.query('SELECT * FROM department', function(res) {
+    connection.query('SELECT * FROM department', function(req,res) {
 
     
         inquirer 
@@ -170,7 +170,7 @@ function addRole() {
 
 function viewDepartments(){
     var query = 'SELECT * FROM department';
-    connection.query(query, function(res) {
+    connection.query(query, function(req,res) {
         
         console.table('All Departments:', res);
         options();
@@ -192,7 +192,7 @@ function addDepartment() {
                         name: answer.newDepartment
                     });
                 var query = 'SELECT * FROM department';
-                connection.query(query, function( res) {
+                connection.query(query, function(req, res) {
               
                 console.log('Your department has been added!');
                 console.table('All Departments:', res);
@@ -202,7 +202,7 @@ function addDepartment() {
 };
 
 function addEmployee() {
-    connection.query('SELECT * FROM role', function (res) {
+    connection.query('SELECT * FROM role', function (req,res) {
         inquirer
             .prompt([
                 {
@@ -257,7 +257,7 @@ function addEmployee() {
 };
 function viewRoles() {
     var query = 'SELECT * FROM role';
-    connection.query(query, function(res){
+    connection.query(query, function(req,res){
         console.table('All Roles:', res);
         options();
     })
